@@ -30,6 +30,28 @@ const MAX_PROFILES = 100
 
 // }
 
+//get list of message thread available
+const get_thread_list = (arg, done) => {
+
+
+
+  try {
+        stemp = document.querySelectorAll('[data-control-name="view_message"]')
+        result = []
+        var i;
+        for (i = 0; i < stemp.length; i++) {
+            stemp2 = stemp[i].href
+            result.addObject(stemp2)
+        }
+
+
+  } catch(err) {
+    result = []
+  }  
+  done(null, result)
+  
+  
+}
 //get user profile from message panet
 const get_user_profile = (arg, done) => {
 
@@ -47,16 +69,12 @@ const get_user_profile = (arg, done) => {
   
 }
 
-async function main(thread, message){
-const arg = buster.argument
-const linkedInScraper = new LinkedInScraper(utils)
-const tab = await nick.newTab()
-//loging
-await linkedIn.login(tab, cookie)
+async function send_message_from_thread(thread, message){
+
 await tab.open(thread)
 
 
-const pageTimeout = 5000
+
 selectors = '[data-control-name="topcard"]'
 await tab.waitUntilVisible(selectors, pageTimeout)
 const user_url = await tab.evaluate(get_user_profile, arg)
@@ -87,9 +105,37 @@ await tab.waitUntilVisible(selectors, pageTimeout)
 await tab.click(selectors)
 await tab.wait(10000)
 
-nick.exit()
+
 }
 
 message = "Hi #firstName#, you are working at #CompanyName#, isn't it?"
 
-main("https://www.linkedin.com/messaging/thread/6541646864096219136/", message)
+
+
+async function main(){
+const arg = buster.argument
+const linkedInScraper = new LinkedInScraper(utils)
+const tab = await nick.newTab()
+//loging
+await linkedIn.login(tab, arg.sessionCookie)
+
+//open messaging tab
+await tab.open("https://www.linkedin.com/messaging/")
+
+//scrool to revel more message
+const pageTimeout = 5000
+selectors = '[data-control-name="view_message"]'
+await tab.waitUntilVisible(selectors, pageTimeout)
+console.log("redirected to messages")
+const x = 1000
+const y = 2000
+await tab.scroll(x, y)
+console.log("scrolled down")
+const thread_list = await tab.evaluate(get_thread_list, arg)
+console.log(thread_list)
+
+nick.exit()
+    
+}    
+
+main()
