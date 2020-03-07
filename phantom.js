@@ -127,15 +127,17 @@ const pageTimeout = 5000
 selectors = '[data-control-name="view_message"]'
 await tab.waitUntilVisible(selectors, pageTimeout)
 console.log("redirected to messages")
-const x = 1000
-const y = 2000
-await tab.scroll(x, y)
+//const x = 1000
+//const y = 2000
+//await tab.scroll(x, y)
+await tab.scrollToBottom()
 console.log("scrolled down")
+await tab.wait(10000)
+console.log("waited")
 const thread_list = await tab.evaluate(get_thread_list, arg)
 console.log(thread_list)
 
 nick.exit()
     
 }    
-
 main()
