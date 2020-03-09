@@ -182,9 +182,21 @@ for (i = 0; i < arg.AccountNumber; i++) {
     await tab.wait(10000)
     message_count = await tab.evaluate(count_messages, arg)  
     console.log(message_count)
+    
+    //check if the thread contain only on message
     if (message_count == 1){
         sender_name = await tab.evaluate(get_sender_name, arg) 
         console.log(sender_name)
+        //check if the thread is the result of an accepted contact request
+        if (sender_name = arg.accountName){
+            await send_message_from_thread(thread_list[i], arg.Message)
+        } else{
+            console.log("This thread is a response to an invite: "+ thread_list[i])
+        }
+        
+        
+    }else {
+       console.log("this thread has already multiple message: " + thread_list[i] ) 
     }
   
 }
