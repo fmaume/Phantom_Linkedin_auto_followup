@@ -208,7 +208,7 @@ nick.exit()
 async function main_with_error_handling(){
 try {
     await main()
-catch(error) {
+}catch(error) {
     console.error(error);
 
 }
