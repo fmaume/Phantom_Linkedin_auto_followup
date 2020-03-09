@@ -75,7 +75,7 @@ const get_sender_name = (arg, done) => {
 
 
   try {
-        stemp = document.querySelectorAll('.msg-s-message-group__meta')
+        stemp = document.querySelector('.msg-s-message-group__meta')
         stemp = stemp.querySelector('[data-control-name="view_profile"]')
         result = stemp.innerText
 
