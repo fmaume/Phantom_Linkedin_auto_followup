@@ -52,6 +52,41 @@ const get_thread_list = (arg, done) => {
   
   
 }
+//get list of number of message within a thread
+const count_messages = (arg, done) => {
+
+
+
+  try {
+        stemp = document.querySelectorAll('.msg-s-message-group__meta')
+        result = stemp.length
+
+
+  } catch(err) {
+    result = 0
+  }  
+  done(null, result)
+  
+  
+}
+//get list name of seder from first message
+const get_sender_name = (arg, done) => {
+
+
+
+  try {
+        stemp = document.querySelectorAll('.msg-s-message-group__meta')
+        stemp = stemp.querySelector('[data-control-name="view_profile"]')
+        result = stemp.innerText
+
+
+  } catch(err) {
+    result = 0
+  }  
+  done(null, result)
+  
+  
+}
 //get user profile from message panet
 const get_user_profile = (arg, done) => {
 
@@ -108,7 +143,7 @@ await tab.wait(10000)
 
 }
 
-message = "Hi #firstName#, you are working at #CompanyName#, isn't it?"
+
 
 
 
@@ -134,8 +169,25 @@ await tab.scrollToBottom()
 console.log("scrolled down")
 await tab.wait(10000)
 console.log("waited")
+await tab.scrollToBottom()
+console.log("scrolled down")
+await tab.wait(10000)
+console.log("waited")
 const thread_list = await tab.evaluate(get_thread_list, arg)
 console.log(thread_list)
+
+var i;
+for (i = 0; i < arg.AccountNumber; i++) {
+    await tab.open(thread_list[i]) 
+    await tab.wait(10000)
+    message_count = await tab.evaluate(count_messages, arg)  
+    console.log(message_count)
+    if (message_count == 1){
+        sender_name = await tab.evaluate(get_sender_name, arg) 
+        console.log(sender_name)
+    }
+  
+}
 
 nick.exit()
     
