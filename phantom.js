@@ -104,7 +104,7 @@ const get_user_profile = (arg, done) => {
   
 }
 
-async function send_message_from_thread(thread, message){
+async function send_message_from_thread(thread, message, tab){
 
 await tab.open(thread)
 
@@ -189,7 +189,7 @@ for (i = 0; i < arg.AccountNumber; i++) {
         console.log(sender_name)
         //check if the thread is the result of an accepted contact request
         if (sender_name = arg.accountName){
-            await send_message_from_thread(thread_list[i], arg.Message)
+            await send_message_from_thread(thread_list[i], arg.Message, tab)
         } else{
             console.log("This thread is a response to an invite: "+ thread_list[i])
         }
@@ -203,5 +203,15 @@ for (i = 0; i < arg.AccountNumber; i++) {
 
 nick.exit()
     
-}    
-main()
+}  
+
+async function main_with_error_handling(){
+try {
+    await main()
+catch(error) {
+    console.error(error);
+
+}
+}
+
+main_with_error_handling()
