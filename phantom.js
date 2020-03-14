@@ -77,13 +77,13 @@ const get_sender_name = (arg, done) => {
   try {
         stemp = document.querySelector('.msg-s-message-group__meta')
         stemp = stemp.querySelector('[data-control-name="view_profile"]')
-        result = stemp.innerText
+        stemp = stemp.innerText
 
 
   } catch(err) {
-    result = 0
+    stemp = 0
   }  
-  done(null, result)
+  done(null, stemp)
   
   
 }
@@ -104,7 +104,7 @@ const get_user_profile = (arg, done) => {
   
 }
 
-async function send_message_from_thread(thread, message, tab){
+async function send_message_from_thread(thread, message, tab, pageTimeout){
 
 await tab.open(thread)
 
@@ -140,7 +140,7 @@ await tab.waitUntilVisible(selectors, pageTimeout)
 await tab.click(selectors)
 await tab.wait(10000)
 
-
+done(null, selectors)
 }
 
 
@@ -178,6 +178,7 @@ console.log(thread_list)
 
 var i;
 for (i = 0; i < arg.AccountNumber; i++) {
+    console.log(i)
     await tab.open(thread_list[i]) 
     await tab.wait(10000)
     message_count = await tab.evaluate(count_messages, arg)  
