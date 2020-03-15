@@ -104,7 +104,7 @@ const get_user_profile = (arg, done) => {
   
 }
 
-async function send_message_from_thread(thread, message, tab, pageTimeout){
+async function send_message_from_thread(thread, message, tab, pageTimeout, arg, linkedInScraper){
 
 await tab.open(thread)
 
@@ -140,7 +140,7 @@ await tab.waitUntilVisible(selectors, pageTimeout)
 await tab.click(selectors)
 await tab.wait(10000)
 
-done(null, selectors)
+
 }
 
 
@@ -178,6 +178,7 @@ console.log(thread_list)
 
 var i;
 for (i = 0; i < arg.AccountNumber; i++) {
+    
     console.log(i)
     await tab.open(thread_list[i]) 
     await tab.wait(10000)
@@ -190,7 +191,8 @@ for (i = 0; i < arg.AccountNumber; i++) {
         console.log(sender_name)
         //check if the thread is the result of an accepted contact request
         if (sender_name = arg.accountName){
-            await send_message_from_thread(thread_list[i], arg.Message, tab)
+            
+            await send_message_from_thread(thread_list[i], arg.Message, tab, pageTimeout, arg, linkedInScraper)
         } else{
             console.log("This thread is a response to an invite: "+ thread_list[i])
         }
