@@ -60,6 +60,8 @@ const count_messages = (arg, done) => {
   try {
         stemp = document.querySelectorAll('.msg-s-message-group__meta')
         result = stemp.length
+	  
+	result = result -31
 
 
   } catch(err) {
