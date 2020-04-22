@@ -30,6 +30,28 @@ const MAX_PROFILES = 100
 
 // }
 
+
+//scroll down thread
+const scroll_thread = (arg, done) => {
+
+
+
+    try {
+
+        stemp = document.querySelectorAll('[data-control-name="view_message"]')
+        stemp = stemp[stemp.length - 1]
+        stemp.scrollIntoView({ block: "start", inline: "nearest" })
+
+
+    } catch (err) {
+        stemp = []
+    }
+    done(null, stemp)
+
+
+}
+
+
 //get list of message thread available
 const get_thread_list = (arg, done) => {
 
@@ -165,14 +187,45 @@ console.log("redirected to messages")
 //const x = 1000
 //const y = 2000
 //await tab.scroll(x, y)
-await tab.scrollToBottom()
-console.log("scrolled down")
-await tab.wait(10000)
-console.log("waited")
-await tab.scrollToBottom()
-console.log("scrolled down")
-await tab.wait(10000)
-console.log("waited")
+    //swolly scroll to reaveal more threads
+    stemp = await tab.evaluate(scroll_thread, arg)
+    console.log("scrolled down")
+    await tab.wait(1000)
+    // 13 thread scrolled
+    stemp = await tab.evaluate(scroll_thread, arg)
+    console.log("scrolled down")
+    await tab.wait(1000)
+    //19 threads scrolled
+    stemp = await tab.evaluate(scroll_thread, arg)
+    console.log("scrolled down")
+    await tab.wait(1000)
+    stemp = await tab.evaluate(scroll_thread, arg)
+    console.log("scrolled down")
+    await tab.wait(1000)
+    stemp = await tab.evaluate(scroll_thread, arg)
+    console.log("scrolled down")
+    await tab.wait(1000)
+    stemp = await tab.evaluate(scroll_thread, arg)
+    console.log("scrolled down")
+    await tab.wait(1000)
+    stemp = await tab.evaluate(scroll_thread, arg)
+    console.log("scrolled down")
+    await tab.wait(1000)
+    stemp = await tab.evaluate(scroll_thread, arg)
+    console.log("scrolled down")
+    await tab.wait(1000)
+    stemp = await tab.evaluate(scroll_thread, arg)
+    console.log("scrolled down")
+    await tab.wait(1000)
+    stemp = await tab.evaluate(scroll_thread, arg)
+    console.log("scrolled down")
+    await tab.wait(1000)
+    stemp = await tab.evaluate(scroll_thread, arg)
+    console.log("scrolled down")
+    await tab.wait(1000)
+    stemp = await tab.evaluate(scroll_thread, arg)
+    console.log("scrolled down")
+    await tab.wait(1000)
 const thread_list = await tab.evaluate(get_thread_list, arg)
 console.log(thread_list)
 
